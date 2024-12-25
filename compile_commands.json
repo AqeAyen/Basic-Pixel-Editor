@@ -1,6 +1,0 @@
-[
-{
-  "directory": "/data/data/com.termux/files/home/project/pixel",
-  "arguments": ["gcc", "-c", "-fvisibility=hidden", "-fvisibility-inlines-hidden", "-O3", "-I/data/data/com.termux/files/usr/local/include", "-DNDEBUG", "-o", "build/.objs/water-simulation/linux/arm64/release/src/main.cpp.o", "src/main.cpp"],
-  "file": "src/main.cpp"
-}]
