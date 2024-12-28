@@ -1,12 +1,8 @@
+#include "../include/main.h"
 #include "../include/slider.h"
 #include "raylib.h"
 #include <stdio.h>
 #include <vector>
-struct Pixel {
-  float x, y;
-  float width, height;
-  Color color;
-};
 
 void UserDraw(float width, float height, Color &color,
               std::vector<Pixel> &pixels) {
@@ -44,7 +40,7 @@ int main(int argc, char **argv) {
   InitWindow(SCREEN_WIDTH, SCREEN_WIDTH, "Pixel");
 
   std::vector<Pixel> pixels;
-  std::vector<Color> pallete = {RED, GREEN, BLUE, YELLOW, ORANGE};
+  std::vector<Color> pallete = {RED, GREEN, BLUE, YELLOW, ORANGE, BLACK, WHITE};
   Color userColor = WHITE;
   float pixelWidth = 32;
   float pixelHeight = 32;
