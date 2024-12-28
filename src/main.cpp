@@ -1,3 +1,4 @@
+#include "../include/slider.h"
 #include "raylib.h"
 #include <stdio.h>
 #include <vector>
@@ -45,6 +46,8 @@ int main(int argc, char **argv) {
   std::vector<Pixel> pixels;
   std::vector<Color> pallete = {RED, GREEN, BLUE, YELLOW, ORANGE};
   Color userColor = WHITE;
+  float pixelWidth = 32;
+  float pixelHeight = 32;
 
   SetTargetFPS(60);
 
@@ -54,8 +57,14 @@ int main(int argc, char **argv) {
     BeginDrawing(); // We Draw stuff inside m here
 
     ClearBackground(WHITE);
-    UserDraw(32, 32, userColor, pixels);
+
+    UserDraw(pixelWidth, pixelHeight, userColor, pixels);
+    float newSize = DrawSlider(10, 10, 200, 8, 64, pixelWidth);
+    pixelWidth = newSize;
+    pixelHeight = newSize;
+
     DrawColorPallete(700, 50, 30, userColor, pallete);
+    DrawText(TextFormat("Size %.0f", pixelWidth), 10, 40, 20, BLACK);
 
     EndDrawing();
   }
