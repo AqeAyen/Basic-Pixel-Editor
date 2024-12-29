@@ -28,4 +28,8 @@ void SaveState(std::vector<Pixel> &pixels);
 // undo
 void undo(std::vector<Pixel> &pixels, std::stack<PixelState> &undostack,
           std::stack<PixelState> &redostack);
+
+void redo(std::vector<Pixel> &pixels, std::stack<PixelState> &undostack,
+          std::stack<PixelState> &redostack);
+
 #endif /* MAIN_H */

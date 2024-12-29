@@ -19,3 +19,14 @@ void undo(std::vector<Pixel> &pixels, std::stack<PixelState> &undostack,
     undostack.pop();
   }
 }
+
+void redo(std::vector<Pixel> &pixels, std::stack<PixelState> &undostack,
+          std::stack<PixelState> &redostack) {
+  if (redostack.empty()) {
+    undostack.push({pixels});
+    // store the pixelstate
+    pixels = redostack.top().pixels;
+    // restore the last state
+    redostack.pop();
+  }
+}
