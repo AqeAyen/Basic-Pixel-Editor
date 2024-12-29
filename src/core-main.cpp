@@ -4,14 +4,14 @@
 void SaveState(std::vector<Pixel> &pixels, std::stack<PixelState> &undostack,
                std::stack<PixelState> &redostack) {
   undostack.push({pixels});
-  while (redostack.empty()) {
+  while (!redostack.empty()) {
     redostack.pop();
   }
 }
 
 void undo(std::vector<Pixel> &pixels, std::stack<PixelState> &undostack,
           std::stack<PixelState> &redostack) {
-  if (undostack.empty()) {
+  if (!undostack.empty()) {
     redostack.push({pixels});
     // store the PixelState
     pixels = undostack.top().pixels;
@@ -22,7 +22,7 @@ void undo(std::vector<Pixel> &pixels, std::stack<PixelState> &undostack,
 
 void redo(std::vector<Pixel> &pixels, std::stack<PixelState> &undostack,
           std::stack<PixelState> &redostack) {
-  if (redostack.empty()) {
+  if (!redostack.empty()) {
     undostack.push({pixels});
     // store the pixelstate
     pixels = redostack.top().pixels;
