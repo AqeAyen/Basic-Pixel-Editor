@@ -55,7 +55,7 @@ int main(int argc, char **argv) {
     ClearBackground(WHITE);
 
     UserDraw(pixelWidth, pixelHeight, userColor, pixels);
-    float newSize = DrawSlider(10, 10, 200, 8, 64, pixelWidth);
+    float newSize = DrawSlider(10, 10, 200, 1, 64, pixelWidth);
     pixelWidth = newSize;
     pixelHeight = newSize;
 
