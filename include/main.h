@@ -23,9 +23,16 @@ struct PixelState {
   std::vector<Pixel> pixels;
 };
 
-void SaveState(std::vector<Pixel> &pixels);
-
+void SaveState(std::vector<Pixel> &pixels, std::stack<PixelState> &undostack,
+               std::stack<PixelState> &redostack);
 // undo
 void undo(std::vector<Pixel> &pixels, std::stack<PixelState> &undostack,
           std::stack<PixelState> &redostack);
+// redo
+void redo(std::vector<Pixel> &pixels, std::stack<PixelState> &undostack,
+          std::stack<PixelState> &redostack);
+
+void DrawButtons(std::vector<Pixel> &pixels, std::stack<PixelState> &undostack,
+                 std::stack<PixelState> &redostack);
+
 #endif /* MAIN_H */

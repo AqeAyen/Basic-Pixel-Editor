@@ -1,15 +1,28 @@
 #include "../include/main.h"
 #include "../include/slider.h"
 #include "raylib.h"
+#include <stack>
 #include <stdio.h>
 #include <vector>
 
 void UserDraw(float width, float height, Color &color,
-              std::vector<Pixel> &pixels) {
-  if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) {
-    pixels.push_back(
-        {(float)GetMouseX(), (float)GetMouseY(), width, height, color});
+              std::vector<Pixel> &pixels, std::stack<PixelState> &undostack,
+              std::stack<PixelState> &redostack) {
+  if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+    Vector2 mouse = GetMousePosition();
+    if (mouse.y > 100) { // Prevent drawing on the button area
+      SaveState(pixels, undostack, redostack); // Save state before drawing
+    }
   }
+
+  if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) {
+    Vector2 mouse = GetMousePosition();
+    if (mouse.y > 100) { // Prevent drawing on the button area
+      pixels.push_back(
+          {(float)GetMouseX(), (float)GetMouseY(), width, height, color});
+    }
+  }
+
   for (const auto &pixel : pixels) {
     DrawRectangle(pixel.x, pixel.y, pixel.width, pixel.height, pixel.color);
   }
@@ -40,6 +53,8 @@ int main(int argc, char **argv) {
   InitWindow(SCREEN_WIDTH, SCREEN_WIDTH, "Pixel");
 
   std::vector<Pixel> pixels;
+  std::stack<PixelState> undoStack;
+  std::stack<PixelState> redoStack;
   std::vector<Color> pallete = {RED, GREEN, BLUE, YELLOW, ORANGE, BLACK, WHITE};
   Color userColor = WHITE;
   float pixelWidth = 32;
@@ -48,13 +63,21 @@ int main(int argc, char **argv) {
   SetTargetFPS(60);
 
   while (!WindowShouldClose()) {
+    /* if (IsKeyDown(KEY_LEFT_CONTROL) && IsKeyPressed(KEY_Z)) { */
+    /*   undo(pixels, undoStack, redoStack); */
+    /*   printf("Undo \n"); */
+    /* } */
+    /* if (IsKeyDown(KEY_LEFT_CONTROL) && IsKeyPressed(KEY_Y)) { */
+    /*   redo(pixels, undoStack, redoStack); */
+    /* } */
     // This is where we update our variables
 
     BeginDrawing(); // We Draw stuff inside m here
 
     ClearBackground(WHITE);
 
-    UserDraw(pixelWidth, pixelHeight, userColor, pixels);
+    UserDraw(pixelWidth, pixelHeight, userColor, pixels, undoStack, redoStack);
+    DrawButtons(pixels, undoStack, redoStack);
     float newSize = DrawSlider(10, 10, 200, 1, 64, pixelWidth);
     pixelWidth = newSize;
     pixelHeight = newSize;
